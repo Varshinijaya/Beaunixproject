@@ -1,15 +1,17 @@
-**PROJECT TITLE **
-    BEAUNIX - Full Stack E-Commerce App
-*DESCRIPTION*
-    BEAUNIX is a full-stack e-commerce platform featuring a Customer and Admin Portal with role-based authentication, product/order/customer management, custom branding, and a premium user interface.
 
-🎬 Demo Video (Watch the working demo of the customer portal, Admin Portal and Backend in action):
+# 🎬 Demo Video (Watch the working demo of the customer portal, Admin Portal and Backend in action):
 🔗https://drive.google.com/file/d/1hwnjndLA4e19DiIi3Z4YFCZPOi5AmP1n/view?usp=drive_link
 
-💻 Full Source Code (Drive Link)
+# 💻 Full Source Code (Drive Link)
    You can download or view the complete source code (Admin Portal + Backend + Customer Portal):
 🔗https://drive.google.com/drive/folders/1v9qw1pTvxoV0oygOLo7rhrbKksO2QdZS?usp=drive_link
 
+
+**PROJECT TITLE **
+    BEAUNIX - Full Stack E-Commerce App
+    
+*DESCRIPTION*
+    BEAUNIX is a full-stack e-commerce platform featuring a Customer and Admin Portal with role-based authentication, product/order/customer management, custom branding, and a premium user interface.
 
 *FEATURES*
     - JWT Authentication (Login/Register)
@@ -24,6 +26,8 @@
     Backend: Node.js, Express.js, MongoDB, Mongoose  
     Auth: JWT, bcryptjs  
     Deployment: github
+
+    
 *FOLDER STRUCTURE*
 BEAUNIXPROJECT/
 │
