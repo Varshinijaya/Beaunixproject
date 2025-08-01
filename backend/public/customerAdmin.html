@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customers</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body { background-color: #f9f9f9; color: #333; }
+
+    .navbar { background-color:#f08080; color: white; padding: 15px 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .navbar h1 { font-size: 26px; }
+
+    .filter-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 25px;
+      flex-wrap: wrap;
+      background-color: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .search-container { flex: 1; max-width: 80%; position: relative; }
+    .search-container input {
+      width: 100%; padding: 10px 35px 10px 12px;
+      border: 1px solid #ccc; border-radius: 5px; font-size: 14px;
+    }
+    .search-container i {
+      position: absolute; top: 50%; right: 12px;
+      transform: translateY(-50%);
+      color: #888; font-size: 18px;
+    }
+
+    .dropdown-wrapper { display: flex; gap: 10px; }
+    .filter-btn, .sort-btn {
+      position: relative;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: white;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 110%;
+      left: 0;
+      background-color: white;
+      min-width: 150px;
+      box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+      z-index: 1;
+      border-radius: 5px;
+    }
+    .dropdown-content div {
+      padding: 10px 15px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+    }
+    .dropdown-content div:hover { background-color: #f5f5f5; }
+    .filter-btn:hover .dropdown-content,
+    .sort-btn:hover .dropdown-content {
+      display: block;
+    }
+
+    .table-wrapper { padding: 20px 25px; }
+    table {
+      width: 100%; border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    th { background-color: #f4f4f4; font-weight: bold; }
+    tbody tr:hover { background-color: #f1f1f1; }
+
+    button {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    .view-btn { background-color: #9d9fd2; }
+    .update-btn { background-color: rgb(154, 207, 154); }
+    .delete-btn { background-color:#c38289; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.5);
+      justify-content: center; align-items: center;
+      z-index: 9999;
+    }
+    .modal-content {
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      width: 400px;
+      max-width: 90%;
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .modal-content h3 { margin-bottom: 15px; }
+  /* Hamburger Icon */
+    .hamburger {
+      font-size: 30px;
+      cursor: pointer;
+      padding: 20px;
+      position: fixed;
+      top: 0px;
+      right: 10px;
+      z-index: 100;
+      
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      height: 100%;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      right: -250px;
+      background-color: #f08080;
+      color: white;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 1000;
+      
+    }
+
+    .sidebar a {
+      padding: 15px 25px;
+      display: block;
+      text-decoration: none;
+      color: white;
+      transition: background 0.3s;
+      font-weight: bolder;
+    }
+
+    .sidebar a:hover {
+      background-color: #f9c1c1;
+    }
+
+    .close-btnh {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .overlayh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      z-index: 999;
+
+    }
+  
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1>CUSTOMERS</h1>
+     <!-- Hamburger Icon -->
+  <div class="hamburger" onclick="openSidebar()">&#9776;</div>
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <div class="close-btnh" onclick="closeSidebar()">&times;</div>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="productAdmin.html">Products</a>
+    <a href="orderAdmin.html">Orders</a>
+    <a href="customerAdmin.html">Customers</a>
+    <a href="#">Settings</a>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlayh" class="overlayh" onclick="closeSidebar()"></div>
+  </nav>
+
+  <!-- Search + Filter/Sort -->
+  <div class="filter-bar">
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search customers...">
+      <i class='bx bx-search'></i>
+    </div>
+
+    <div class="dropdown-wrapper">
+      <div class="filter-btn">
+        <i class='bx bx-filter-alt'></i>
+        Filter by
+        <i class='bx bx-chevron-down'></i>
+        <div class="dropdown-content">
+          <div>Name</div>
+          <div>Email</div>
+          <div>Status</div>
+        </div>
+      </div>
+
+      <div class="sort-btn">
+        <i class='bx bx-sort'></i>
+        Sort
+        <div class="dropdown-content">
+          <div>Name</div>
+          <div>Email</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="customer-table-body">
+        <!-- Rows go here -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content" id="modal-content">
+      <h3 id="modal-title">Customer Details</h3>
+      <input id="modal-name" placeholder="Name" readonly />
+      <input id="modal-email" placeholder="Email" readonly />
+      <input id="modal-status" placeholder="Status" readonly />
+      <div style="margin-top: 10px;">
+        <button class="update-btn" onclick="saveChanges()">Save</button>
+        <button onclick="closeModal()" style="background-color: grey;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let customersData = [];
+    const tbody = document.getElementById("customer-table-body");
+    const searchInput = document.getElementById("search-input");
+
+    async function fetchCustomers() {
+      const res = await fetch("/api/customers");
+      customersData = await res.json();
+      renderTable(customersData);
+    }
+
+    function renderTable(data) {
+      tbody.innerHTML = "";
+      data.forEach((customer, i) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${i + 1}</td>
+          <td>${customer.username}</td>
+          <td>${customer.email}</td>
+          <td>${customer.isBlocked ? "Blocked" : "Active"}</td>
+          <td>
+            <button class="view-btn" onclick="openModalById('${customer._id}', false)">View</button>
+            <button class="update-btn" onclick="openModalById('${customer._id}', true)">Update</button>
+            <button class="delete-btn" onclick="deleteCustomer('${customer._id}')">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function openModalById(id, isEdit = false) {
+      const customer = customersData.find(c => c._id === id);
+      if (!customer) return;
+      openModal(customer, isEdit);
+    }
+
+    function openModal(customer, isEdit) {
+      document.getElementById("modal").style.display = "flex";
+      document.getElementById("modal-name").value = customer.username;
+      document.getElementById("modal-email").value = customer.email;
+      document.getElementById("modal-status").value = customer.isBlocked ? "Blocked" : "Active";
+
+      document.getElementById("modal-name").readOnly = !isEdit;
+      document.getElementById("modal-email").readOnly = !isEdit;
+      document.getElementById("modal-status").readOnly = !isEdit;
+
+      document.getElementById("modal-title").textContent = isEdit ? "Edit Customer" : "Customer Details";
+      currentEditingId = customer._id;
+    }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    async function saveChanges() {
+      const updated = {
+        username: document.getElementById("modal-name").value,
+        email: document.getElementById("modal-email").value,
+        isBlocked: document.getElementById("modal-status").value.toLowerCase() === "blocked"
+      };
+
+      await fetch(`/api/customers/${currentEditingId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updated)
+      });
+
+      await fetchCustomers();
+      closeModal();
+    }
+
+    async function deleteCustomer(id) {
+      if (confirm("Are you sure you want to delete this customer?")) {
+        await fetch(`/api/customers/${id}`, { method: "DELETE" });
+        await fetchCustomers();
+      }
+    }
+
+    searchInput.addEventListener("input", () => {
+      const term = searchInput.value.toLowerCase();
+      const filtered = customersData.filter(c =>
+        c.username.toLowerCase().includes(term) || c.email.toLowerCase().includes(term)
+      );
+      renderTable(filtered);
+    });
+
+    // Filters
+    document.querySelectorAll(".filter-btn .dropdown-content div").forEach(option => {
+      option.addEventListener("click", () => {
+        const value = option.textContent.toLowerCase();
+        let filtered = [...customersData];
+        if (value === "status") {
+          const status = prompt("Enter status: active or blocked").toLowerCase();
+          filtered = customersData.filter(c =>
+            status === "active" ? !c.isBlocked : c.isBlocked
+          );
+        }
+        renderTable(filtered);
+      });
+    });
+
+    // Sorts
+    document.querySelectorAll(".sort-btn .dropdown-content div").forEach(option => {
+      option.addEventListener("click", () => {
+        const value = option.textContent.toLowerCase();
+        let sorted = [...customersData];
+        if (value === "name") sorted.sort((a, b) => a.username.localeCompare(b.username));
+        if (value === "email") sorted.sort((a, b) => a.email.localeCompare(b.email));
+        renderTable(sorted);
+      });
+    });
+
+    let currentEditingId = null;
+    fetchCustomers();
+
+
+    function openSidebar() {
+      document.getElementById("sidebar").style.right = "0";
+      document.getElementById("overlayh").style.display = "block";
+    }
+
+    function closeSidebar() {
+      document.getElementById("sidebar").style.right = "-250px";
+      document.getElementById("overlayh").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>

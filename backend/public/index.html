@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BEAUNIX</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section id="header" class="header">
+      <a href="#" class="logo"><i class="fas fa-female"></i> BEAUNIX</a>
+      <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="review.html">Reviews</a>
+        <a href="product.html">Products</a>
+        <a href="#aff">Brand</a>
+        <a href="#" id="profileLink">Profile</a>
+
+        
+        
+      </nav>
+
+      <div class="cart">
+     <div class="icon-box">
+    <i class="fas fa-heart"></i>
+  </div>
+<a href="order.html">
+  <div class="icon-box cart-icon">
+    <i class="fas fa-shopping-bag"></i>
+  </div></a>
+</div>
+       
+    <a href="login.html" class="btn1">LogIn</a> 
+    <span id="profileContainer" class="profile-preview" style="display: none;"></span>
+    </section>
+
+    <!-- Profile Modal -->
+<div class="modal" id="profileModal">
+  <div class="modal-content">
+    <h3 style="font-size: 2em; color: #F08080;">Profile Details</h3>
+
+    <label for="username">Logged in as</label>
+    <input type="text" id="username" placeholder="Enter your name" />
+
+    <label for="profilePic">Profile</label>
+    <input type="file" id="profilePic" accept="image/*" />
+
+    <img id="previewImage" class="profile-image" src="#" alt="Preview" style="display: none;" />
+
+    <button onclick="saveProfile()">Save</button>
+  </div>
+</div>
+
+    <section class="home" id="home">
+      <div
+        class="slide active"
+        style="
+          background: url(./img/banner2.avif) no-repeat;
+          background-size: cover;
+          background-position: center;
+        "
+      >
+        <div class="content">
+          <span
+            >BEAUTY <br />
+            DESTINATION</span
+          >
+          <h3>MAKE UP SALE , FLAT 80%</h3>
+          <a href="product.html" class="btn">Explore Products</a>
+        </div>
+      </div>
+
+      <div
+        class="slide"
+        style="
+          background: url(./img/banner1.avif) no-repeat;
+          background-size: cover; 
+          background-position: center;
+        "
+      >
+        <div class="content">
+          <span>BEAUTY <br />
+          DESTINATION</span
+          >
+          <h3>MAKE UP SALE , FLAT 80%</h3>
+          
+          <a href="product.html" class="btn">Explore Products</a>
+        </div>
+      </div>
+
+      <div
+        class="slide"
+        style="
+          background: url(./img/banner3\ copy.avif) no-repeat;
+          background-size: cover;
+          background-position: center;
+        "
+      >
+        <div class="content">
+          <span
+            >BEAUTY <br />
+            DESTINATION</span
+          >
+          <h3>MAKE UP SALE , FLAT 80%</h3>
+          <a href="product.html" class="btn" >Explore Products</a>
+        </div>
+      </div>
+
+      <div id="next-slide" onclick="next()" class="fas fa-angle-right"></div>
+      <div id="prev-slide" onclick="prev()" class="fas fa-angle-left"></div>
+    </section>
+
+    <section class="category" style="margin-top: 80px;">
+      <div class="box-container">
+        <a href="product.html" class="box">
+          <img decoding="async"style="width:150px" src="./img/foundation.jpg" />
+          <h3>Foundation </h3>
+        </a>
+
+        <a href="product.html" class="box">
+          <img decoding="async" style="width:150px" src="./img/lipstickk.jpg" />
+          <h3>Lipstick</h3>
+        </a>
+
+        <a href="product.html" class="box">
+          <img decoding="async"style="width:150px" src="./img/mascara.jpg" />
+          <h3>Mascara</h3>
+        </a>
+
+        <a href="product.html" class="box">
+          <img decoding="async"style="width:150px" src="./img/eye.jpg" />
+          <h3>Eyeshadow</h3>
+        </a>
+
+        <a href="product.html" class="box">
+          <img decoding="async"style="width:150px" src="./img/eyeliner.jpg" />
+          <h3>Eyeliner</h3>
+        </a>
+
+        <a href="product.html" class="box">
+          <img decoding="async"style="width:150px" src="./img/concealer.jpg" />
+          <h3>Concealer</h3>
+        </a>
+      </div>
+    </section>
+
+    <!-- affordable -->
+     <div id="aff" style="text-align:center; padding: 20px;">
+  <h2 style="font-family: Arial, sans-serif; font-size: 32px; margin-bottom: 30px;">OUR<span style="color: #F08080"> AFFORDABLE BRANDS</span></h2>
+
+  <!-- First Row -->
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 50px;">
+
+    <!-- Maybelline New York -->
+    <a href="product.html" style="text-decoration: none; color: black; flex: 1 1 30%; max-width: 30%; margin: 10px;">
+      <div style="transition: transform 0.3s; text-align: center;"
+           onmouseover="this.style.transform='scale(1.05)'" 
+           onmouseout="this.style.transform='scale(1)'">
+        <img src="./img/card11.jpg" alt="Maybelline New York"
+             style="width: 100%; max-width: 370px; height: 150px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h4 style="margin-top: 12px; font-family: Arial; font-size: 1.7em;">MAYBELLINE NEW YORK</h4>
+      </div>
+    </a>
+
+    <!-- Elf Cosmetics -->
+    <a href="product.html" style="text-decoration: none; color: black; flex: 1 1 30%; max-width: 30%; margin: 10px;">
+      <div style="transition: transform 0.3s; text-align: center;" 
+           onmouseover="this.style.transform='scale(1.05)'" 
+           onmouseout="this.style.transform='scale(1)'">
+        <img src="./img/card22.jpg" alt="Elf Cosmetics"
+             style="width: 100%; max-width: 370px; height: 150px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h4 style="margin-top: 12px; font-family: Arial;font-size: 1.7em;">ELF COSMETICS</h4>
+      </div>
+    </a>
+
+    <!-- Kay Beauty -->
+    <a href="product.html" style="text-decoration: none; color: black; flex: 1 1 30%; max-width: 30%; margin: 10px;">
+      <div style="transition: transform 0.3s; text-align: center;" 
+           onmouseover="this.style.transform='scale(1.05)'" 
+           onmouseout="this.style.transform='scale(1)'">
+        <img src="./img/kay-inside1.jpg" alt="Kay Beauty"
+             style="width: 100%; max-width: 370px; height: 150px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h4 style="margin-top: 12px; font-family: Arial;font-size: 1.7em;">KAY BEAUTY</h4>
+      </div>
+    </a>
+  </div>
+
+  <!-- Second Row -->
+  <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+
+    <!-- Loreal Paris -->
+    <a href="product.html" style="text-decoration: none; color: black; flex: 1 1 30%; max-width: 30%; margin: 10px;">
+      <div style="transition: transform 0.3s; text-align: center;" 
+           onmouseover="this.style.transform='scale(1.05)'" 
+           onmouseout="this.style.transform='scale(1)'">
+        <img src="./img/loreal.webp" alt="Loreal Paris"
+             style="width: 100%; max-width: 370px; height:150px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h4 style="margin-top: 12px; font-family: Arial;font-size: 1.7em;">LOREAL PARIS</h4>
+      </div>
+    </a>
+
+    <!-- Swiss Beauty -->
+    <a href="product.html" style="text-decoration: none; color: black; flex: 1 1 30%; max-width: 30%; margin: 10px;">
+      <div style="transition: transform 0.3s; text-align: center;" 
+           onmouseover="this.style.transform='scale(1.05)'" 
+           onmouseout="this.style.transform='scale(1)'">
+        <img src="./img/swiss.jpg" alt="Swiss Beauty"
+             style="width: 100%; max-width:370px; height:150px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h4 style="margin-top: 12px; font-family: Arial;font-size: 1.7em;">SWISS BEAUTY</h4>
+      </div>
+    </a>
+
+    <!-- Lakme -->
+    <a href="product.html" style="text-decoration: none; color: black; flex: 1 1 30%; max-width: 30%; margin: 10px;">
+      <div style="transition: transform 0.3s; text-align: center;" 
+           onmouseover="this.style.transform='scale(1.05)'" 
+           onmouseout="this.style.transform='scale(1)'">
+        <img src="./img/lakme.jpg" alt="Lakme"
+             style="width: 100%; max-width:370px; height:150px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+        <h4 style="margin-top: 12px; font-family: Arial;font-size: 1.7em;">LAKME</h4>
+      </div>
+    </a>
+  </div>
+</div>
+
+
+
+     <section class="gallery" id="gallery">
+      <h1 class="heading">OUR <span>LUXURY BRANDS</span></h1>
+      <div class="box-container">
+        <div class="box">
+          <img decoding="async" src="img/g1.jpg" />
+          <div class="content">
+            <h3>Charlotte Tilbury</h3>
+            <p>Magic Cream, Pillow Talk, Airbrush Foundation</p>
+            <a href="product.html" class="btn">Visit</a>
+          </div>
+        </div>
+
+        <div class="box">
+          <img decoding="async" src="img/g2.png" />
+          <div class="content">
+            <h3>Gucci</h3>
+            <p>Shop ready-to-wear</p>
+            <a href="product.html" class="btn">Visit</a>
+          </div>
+        </div>
+
+        <div class="box">
+          <img decoding="async" src="img/g3.avif" />
+          <div class="content">
+            <h3>Urban Decay</h3>
+            <p>Meet the Urban Decay way</p>
+            <a href="product.html" class="btn">Visit</a>
+          </div>
+        </div>
+
+        <div class="box">
+          <img decoding="async" src="img/g4.jpg" />
+          <div class="content">
+            <h3>Rare Beauty</h3>
+            <p>Unrealistic standards of perfection</p>
+            <a href="product.html" class="btn">Visit</a>
+          </div>
+        </div>
+
+        <div class="box">
+          <img decoding="async" src="img/g6.png" />
+          <div class="content">
+            <h3>Rhode</h3>
+            <p> Curated skincare essentials</p>
+            <a href="product.html" class="btn">Visit</a>
+          </div>
+        </div>
+
+        <div class="box">
+          <img decoding="async" src="img/g7.jpg" />
+          <div class="content">
+            <h3>Huda Beauty</h3>
+            <p>store for all things</p>
+            <a href="product.html" class="btn">Visit</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="img">
+        <div class="code-block code-block-5" style="margin: 8px 0; clear: both">
+          <script
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8624641451939910"
+            crossorigin="anonymous"
+            defer
+            data-deferred="1"
+          ></script>
+          <ins
+            class="adsbygoogle"
+            style="display: block"
+            data-ad-client="ca-pub-8624641451939910"
+            data-ad-slot="4454598133"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+         
+        </div>
+        <img
+          decoding="async"
+          src="img/about1.avif"
+          alt=""
+        />
+      </div>
+      <div class="content">
+        <div class="box">
+          <h3>About <span>Us...</span></h3>
+          <p>
+           Welcome to your new beauty destination!
+At GlamNest (or your brand name), we believe makeup is more than just a routine — it's a form of self-expression. Whether you're looking for a bold red lipstick, a flawless foundation, or the perfect eyeshadow palette, we’ve curated high-quality, cruelty-free products that suit every skin tone and style. With smooth textures, rich pigments, and long-lasting formulas, our collection is designed to help you feel confident and beautiful every day. Shop now and let your natural beauty shine through!
+          </p>
+          <a href="product.html" class="btn">EXPLORE</a>
+        </div>
+        
+      </div>
+
+      
+    </section>
+
+    
+
+    <section class="banner">
+      
+      <div class="review-section">
+    <h2>Read Reviews</h2>
+    <p>Check out what our customers are saying! Browse reviews and ratings to help you make informed choices.</p>
+    <div class="review-buttons">
+      <button onclick="location.href='review.html'">Write Review</button>
+<button onclick="location.href='read.html'">Read Review</button>
+
+    </section>
+
+  
+
+
+    <section class="services">
+      <div class="box">
+        <img decoding="async" src="img/icon-1.png" alt="" />
+        <h3>Fast Delivery</h3>
+        <p>You can get your package soon</p>
+      </div>
+
+      <div class="box">
+        <img decoding="async" src="img/icon-2.png" alt="" />
+        <h3>Safer Package</h3>
+        <p>No damage to your product</p>
+      </div>
+
+      <div class="box">
+        <img decoding="async" src="img/icon-3.png" alt="" />
+        <h3>Authentication</h3>
+        <p>Your data is secure</p>
+      </div>
+    </section>
+
+    <section class="footer">
+      <div class="box-container">
+        <div class="box">
+          <h3>quick links</h3>
+          <a class="link" href="#home">
+            <i class="fas fa-angle-right"></i> home</a
+          >
+          <a class="link" href="#about">
+            <i class="fas fa-angle-right"></i> about</a
+          >
+          <a class="link" href="#shop">
+            <i class="fas fa-angle-right"></i> service</a
+          >
+          <a class="link" href="#gallery">
+            <i class="fas fa-angle-right"></i> Brands</a
+          >
+          <a class="link" href="#message">
+            <i class="fas fa-angle-right"></i> contact</a
+          >
+          
+        </div>
+
+        <div class="box">
+          <h3>Category</h3>
+          <a class="link" >
+            <i class="fas fa-angle-right"></i> Affordable</a
+          >
+          <a class="link" >
+            <i class="fas fa-angle-right"></i> Luxury
+          </a>
+          <a class="link" >
+            <i class="fas fa-angle-right"></i> EyeMakeup
+          </a>
+          <a class="link">
+            <i class="fas fa-angle-right"></i> FaceMakeup
+          </a>
+          <a class="link">
+            <i class="fas fa-angle-right"></i> Perfume
+          </a>
+        </div>
+
+        <div class="box">
+          <h3>contact info</h3>
+          <a class="link" >
+            <i class="fas fa-phone"></i> +91 87546 5874
+          </a>
+          <a class="link">
+            <i class="fas fa-phone"></i> +91 87546 25846
+          </a>
+          <a class="link">
+            <i class="fas fa-envelope"></i> beaunixmakeup@gmail.com
+          </a>
+          <a class="link">
+            <i class="fas fa-map"></i> Delhi, india - 401203
+          </a>
+          <div class="share">
+            <a href="#" class="fab fa-facebook-f"></a>
+            <a href="#" class="fab fa-twitter"></a>
+            <a href="#" class="fab fa-instagram"></a>
+            <a href="#" class="fab fa-linkedin"></a>
+          </div>
+        </div>
+
+        <div class="box">
+          <h3>Thanks to visit Us!</h3>
+          <p>For any query!</p>
+          
+            
+           <button class="btn" onclick="openPopupc()">Call-us</button>
+
+  <!-- Popup -->
+  <div class="popup-overlay" id="callPopupc">
+    <div class="popup">
+      <button class="close-btn" onclick="closePopupc()">&times;</button>
+      <h2>Customer Care</h2>
+      <p>You can contact<br> customer care: <strong>87546 5874</strong></p>
+    </div>
+  </div>
+            <br />
+              <button class="btn" onclick="openPopup1()">Mail-us</button>
+
+  <!-- Popup -->
+  <div class="popup-overlay" id="callPopup1">
+    <div class="popup">
+      <button class="close-btn" onclick="closePopup1()">&times;</button>
+      <h2>Customer Care</h2>
+      <p>Ask your queries to this mail<br>Mail id : <strong>beaunixmakeup@gmail.com</strong></p>
+    </div>
+  </div>
+          
+        </div>
+      </div>
+
+      <div class="credit">
+        Website <span>&copy;BEAUNIX</span> || All Rights Reserved 2025.
+      </div>
+    </section>
+
+    <script src="main.js" defer data-deferred="1"></script>
+
+   
+  </body>
+</html>

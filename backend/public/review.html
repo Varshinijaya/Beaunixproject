@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Write a Review</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f2f2f2;
+    }
+    nav {
+      background: #F08080;
+      padding: 15px;
+      color: white;
+      text-align: center;
+      font-size: 24px;
+    }
+    a{
+      text-decoration: none;
+      font-weight: bolder;
+      color:white;
+      margin-left: 200px;
+    }
+    .container {
+      max-width: 600px;
+      background: white;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .stars {
+      display: flex;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .stars span {
+      font-size: 25px;
+      cursor: pointer;
+      color: #ccc;
+    }
+    .stars span.selected {
+      color: rgb(214, 89, 109);
+    }
+    button {
+      margin-top: 20px;
+      background-color: #F08080;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <nav><strong>REVIEWS</strong> 
+    <a href="index.html">HOME</a>
+  </nav>
+
+  <div class="container">
+    <h2>Write a Review</h2>
+    <label>Name</label>
+    <input type="text" id="name">
+    <label>Product Name</label>
+    <input type="text" id="product">
+    <label>Review</label>
+    <textarea rows="5" id="reviewText"></textarea>
+    <label>Rating</label>
+    <div class="stars" id="starContainer">
+      <span data-value="1">&#9733;</span>
+      <span data-value="2">&#9733;</span>
+      <span data-value="3">&#9733;</span>
+      <span data-value="4">&#9733;</span>
+      <span data-value="5">&#9733;</span>
+    </div>
+    <button onclick="submitReview()">Submit Review</button>
+  </div>
+
+  <script>
+    let selectedRating = 0;
+
+    document.querySelectorAll('#starContainer span').forEach(star => {
+      star.addEventListener('click', () => {
+        selectedRating = parseInt(star.dataset.value);
+        document.querySelectorAll('#starContainer span').forEach(s => {
+          s.classList.toggle('selected', parseInt(s.dataset.value) <= selectedRating);
+        });
+      });
+    });
+
+    function submitReview() {
+      const name = document.getElementById('name').value.trim();
+      const product = document.getElementById('product').value.trim();
+      const text = document.getElementById('reviewText').value.trim();
+
+      if (!name || !product || !text || selectedRating === 0) {
+        alert('Please fill all fields and select a rating.');
+        return;
+      }
+
+      const review = {
+        name,
+        product,
+        text,
+        rating: selectedRating
+      };
+
+      let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+      reviews.push(review);
+      localStorage.setItem('reviews', JSON.stringify(reviews));
+
+      alert('Review submitted!');
+      location.href = 'read.html';
+    }
+  </script>
+
+</body>
+</html>

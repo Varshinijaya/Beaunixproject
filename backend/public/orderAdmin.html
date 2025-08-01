@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orders</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #f08080;
+      color: white;
+      padding: 15px 25px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .navbar h1 {
+      font-size: 26px;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 20px 25px;
+      gap: 15px;
+      flex-wrap: wrap;
+      background-color: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .filter-dropdown {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    /* Table */
+    .table-wrapper {
+      padding: 20px 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f9f9f9;
+      font-weight: bold;
+    }
+
+    tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Actions */
+    .action-btn {
+      padding: 6px 12px;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .action-btn.view {
+      background-color: #9d9fd2;
+      margin-right: 5px;
+    }
+    .action-btn.update{
+      background-color: rgb(154, 207, 154);
+    }
+
+    .action-btn.delete {
+      background-color: #c38289;
+    }
+
+    .action-btn:hover {
+      opacity: 0.9;
+    }
+
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 99;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 25px;
+  border-radius: 8px;
+  width: 60%;
+  max-width: 500px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+}
+
+.close-btn {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Hamburger Icon */
+    .hamburger {
+      font-size: 30px;
+      cursor: pointer;
+      padding: 20px;
+      position: fixed;
+      top: 0px;
+      right: 10px;
+      z-index: 100;
+      
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      height: 100%;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      right: -250px;
+      background-color: #f08080;
+      color: white;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 1000;
+      
+    }
+
+    .sidebar a {
+      padding: 15px 25px;
+      display: block;
+      text-decoration: none;
+      color: white;
+      transition: background 0.3s;
+      font-weight: bolder;
+    }
+
+    .sidebar a:hover {
+      background-color: #f9c1c1;
+    }
+
+    .close-btnh {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .overlayh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      z-index: 999;
+
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1>ORDERS</h1>
+
+
+     <!-- Hamburger Icon -->
+  <div class="hamburger" onclick="openSidebar()">&#9776;</div>
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <div class="close-btnh" onclick="closeSidebar()">&times;</div>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="productAdmin.html">Products</a>
+    <a href="orderAdmin.html">Orders</a>
+    <a href="customerAdmin.html">Customers</a>
+    <a href="#">Settings</a>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlayh" class="overlayh" onclick="closeSidebar()"></div>
+  </nav>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <select class="filter-dropdown">
+      <option value="">Status</option>
+      <option value="pending">Pending</option>
+      <option value="pending">Processing</option>
+      <option value="shipped">Shipped</option>
+    </select>
+
+    <select class="filter-dropdown">
+      <option value="">Date</option>
+      <option value="today">Today</option>
+      <option value="last7">Last 7 Days</option>
+      <option value="thisMonth">This Month</option>
+    </select>
+
+    <select class="filter-dropdown">
+      <option value="">Customer</option>
+      
+    </select>
+  </div>
+
+  <!-- Orders Table -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="order-table-body">
+        <!-- Dynamic rows will be injected here -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- View/Update Modal -->
+<div id="orderModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h2>Order Details</h2>
+
+    <div id="orderDetails"></div>
+
+    <label>Status:</label>
+    <select id="orderStatus">
+      <option value="pending">Pending</option>
+      <option value="processing">Processing</option>
+      <option value="shipped">Shipped</option>
+      <option value="delivered">Delivered</option>
+    </select>
+
+    <button onclick="saveOrderUpdate()">Save Changes</button>
+  </div>
+</div>
+
+
+
+<script>
+  async function fetchOrders() {
+    try {
+      const res = await fetch("/api/orders");
+      const orders = await res.json();
+
+      const tableBody = document.getElementById("order-table-body");
+      tableBody.innerHTML = "";
+
+      orders.forEach((order, index) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${order._id}</td>
+          <td>${order.user?.username || "Jaya" }</td>
+          <td>${order.status || "Pending"}</td>
+          <td>₹${order.total.toFixed(2)}</td>
+          <td>
+            <button class="action-btn view" onclick="viewOrder('${order._id}')">View</button>
+            <button class="action-btn update" onclick="updateOrder('${order._id}')">Update</button>
+            <button class="action-btn delete" onclick="deleteOrder('${order._id}')">Delete</button>
+          </td>
+        `;
+
+        tableBody.appendChild(row);
+      });
+
+    } catch (err) {
+      console.error("Failed to fetch orders", err);
+    }
+  }
+
+  function viewOrder(orderId) {
+    alert(`View order details for ID: ${orderId}`);
+    // You can show a modal or redirect to order detail page
+  }
+
+  function updateOrder(orderId) {
+    alert(`Update order: ${orderId}`);
+    // You can redirect to an update form or show inline edit
+  }
+
+  async function deleteOrder(orderId) {
+    if (confirm("Are you sure you want to delete this order?")) {
+      try {
+        const res = await fetch(`/api/orders/${orderId}`, {
+          method: "DELETE"
+        });
+
+        if (res.ok) {
+          alert("Order deleted.");
+          fetchOrders(); // Refresh table
+        } else {
+          alert("Failed to delete order.");
+        }
+      } catch (err) {
+        console.error("Delete error", err);
+      }
+    }
+  }
+
+  // Load orders on page load
+  window.onload = fetchOrders;
+
+  let selectedOrderId = null;
+
+  async function viewOrder(orderId) {
+    try {
+      const res = await fetch(`/api/orders/${orderId}`);
+      const order = await res.json();
+
+      selectedOrderId = orderId;
+
+      const summary = order.items.map(
+        item => `${item.name} x${item.quantity} - ₹${item.price * item.quantity}`
+      ).join("<br>");
+
+      document.getElementById("orderDetails").innerHTML = `
+        <p><strong>Customer:</strong> ${order.customerName || req.body.username}</p>
+        <p><strong>Phone:</strong> ${order.phone || "N/A"}</p>
+        <p><strong>Address:</strong> ${order.addressLine1}, ${order.city}, ${order.state}, ${order.zip}, ${order.country}</p>
+        <p><strong>Order Summary:</strong><br>${summary}</p>
+        <p><strong>Total:</strong> ₹${order.total}</p>
+      `;
+
+      document.getElementById("orderStatus").value = order.status || "pending";
+
+      document.getElementById("orderModal").style.display = "block";
+
+    } catch (err) {
+      alert("Failed to load order");
+      console.error(err);
+    }
+  }
+
+  function closeModal() {
+    document.getElementById("orderModal").style.display = "none";
+  }
+
+  async function saveOrderUpdate() {
+    const newStatus = document.getElementById("orderStatus").value;
+    try {
+      const res = await fetch(`/api/orders/${selectedOrderId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      if (res.ok) {
+        alert("Order updated");
+        closeModal();
+        fetchOrders();
+      } else {
+        alert("Update failed");
+      }
+    } catch (err) {
+      console.error("Error updating order:", err);
+    }
+  }
+
+   function openSidebar() {
+      document.getElementById("sidebar").style.right = "0";
+      document.getElementById("overlayh").style.display = "block";
+    }
+
+    function closeSidebar() {
+      document.getElementById("sidebar").style.right = "-250px";
+      document.getElementById("overlayh").style.display = "none";
+    }
+</script>
+
+
+
+</body>
+</html>

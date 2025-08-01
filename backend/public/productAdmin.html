@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products</title>
+  
+  
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+  <style>
+    /* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background-color: #f4f4f4;
+}
+
+/* Navbar */
+.navbar {
+  background-color:#F08080;
+  color: white;
+  padding: 15px 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar h1 {
+  font-size: 24px;
+}
+
+/* Action Bar */
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+.add-button {
+  background-color:  #74df8d;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  border:none;
+  font-weight: bolder;
+}
+
+.search-sort-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+/* Search Bar */
+.search-bar {
+  position: relative;
+  width: 80%;
+  max-width: 500px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 8px 35px 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-bar i {
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  color: #555;
+}
+
+/* Sort Dropdown */
+.sort-dropdown {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Table Styles */
+.table-wrapper {
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+
+
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  font-weight: bold;
+  color: #333;
+}
+
+tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pagination button {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination button.active {
+  background-color:#F08080;
+  color: white;
+  border-color: #F08080;
+}
+
+.pagination button:hover {
+  background-color: #f0f0f0;
+}
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 20px 30px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+}
+
+.modal-content label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: 500;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.modal-content textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px;
+  resize: vertical;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+
+.flex-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.flex-row div {
+  flex: 1;
+}
+
+.submit-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  border: none;
+  color: white;
+  font-size: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Close button */
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+/* Button Styles in Modal */
+.modal-content .modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.modal-content .modal-actions button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+
+#save-btn {
+  background-color:#74df8d; /* Green */
+}
+
+.cancel-btn {
+  background-color:#dc6470; /* Red */
+}
+
+/* Edit/Delete Button Styling */
+.action-btn {
+  padding: 6px 12px;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 5px;
+  transition: 0.3s ease;
+  font-weight: bold;
+}
+
+.action-btn.edit {
+  background-color:  rgb(154, 207, 154);
+}
+
+.action-btn.delete {
+  background-color: #c38289;
+}
+
+.action-btn:hover {
+  opacity: 0.9;
+}
+
+.hamburger {
+      font-size: 30px;
+      cursor: pointer;
+      padding: 20px;
+      position: fixed;
+      top: 0px;
+      right: 10px;
+      z-index: 100;
+      
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      height: 100%;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      right: -250px;
+      background-color: #f08080;
+      color: white;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 1000;
+      
+    }
+
+    .sidebar a {
+      padding: 15px 25px;
+      display: block;
+      text-decoration: none;
+      color: white;
+      transition: background 0.3s;
+      font-weight: bolder;
+    }
+
+    .sidebar a:hover {
+      background-color: #f9c1c1;
+    }
+
+    .close-btnh {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .overlayh {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      z-index: 999;
+    }
+
+    
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1>Products</h1>
+
+    
+     <!-- Hamburger Icon -->
+  <div class="hamburger" onclick="openSidebar()">&#9776;</div>
+
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <div class="close-btnh" onclick="closeSidebar()">&times;</div>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="productAdmin.html">Products</a>
+    <a href="orderAdmin.html">Orders</a>
+    <a href="customerAdmin.html">Customers</a>
+    <a href="#">Settings</a>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlayh" class="overlayh" onclick="closeSidebar()"></div>
+  </nav>
+  </nav>
+
+  <!-- Action Bar -->
+  <div class="action-bar">
+    <button class="add-button" onclick="openModal()"><i class='bx bx-plus'></i> Add Product</button>
+
+    <div class="search-sort-container">
+      <div class="search-bar">
+        <input type="text" placeholder="Search products..." />
+        <i class='bx bx-search'></i>
+      </div>
+
+      <select class="sort-dropdown">
+        <option value="">Sort by</option>
+        <option value="name">Name</option>
+        <option value="price">Price</option>
+        <option value="stock">Stock Quantity</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Product Table -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="product-table-body"></tbody>
+    </table>
+    <div id="pagination1" class="pagination1"></div>
+  </div>
+
+  
+  <!-- Add/Edit Product Modal -->
+<div id="addProductModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <h2 id="modal-title">Add Product</h2>
+    <form id="add-product-form">
+      <input type="hidden" id="product-id" />
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter product name"  required />
+
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" placeholder="Enter product description"></textarea>
+
+      <div style="display: flex; gap: 10px;">
+        <div style="flex: 1;">
+          <label for="price">Price:</label>
+          <input type="number" id="price" name="price" min="0.01" step="0.01" required />
+        </div>
+        <div style="flex: 1;">
+          <label for="stock">Stock Quantity:</label>
+          <input type="number" id="stock" name="stock" min="0" step="1" required />
+        </div>
+      </div>
+
+      <label for="image">Upload Image:</label>
+      <input type="file" id="image" name="image" accept="image/*" />
+<!-- new -->
+
+
+      <div class="modal-actions">
+  <button type="submit" id="save-btn">Add</button>
+  <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+</div>
+
+    </form>
+  </div>
+</div>
+
+  
+<script src="/productAdmin.js" defer></script>
+</body>
+</html>

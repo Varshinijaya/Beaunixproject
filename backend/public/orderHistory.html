@@ -1,0 +1,139 @@
+<!-- orders.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order History</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+    }
+
+    .navbar {
+      background-color: #F08080;
+      padding: 15px 30px;
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: white;
+      font-size: 16px;
+      text-decoration: none;
+      font-weight: bolder;
+      font-size: 1.2em;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .order-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .order-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .order-items {
+      margin-left: 15px;
+      font-size: 15px;
+    }
+
+    .view-btn {
+      margin-top: 10px;
+      display: inline-block;
+      padding: 8px 14px;
+      background-color: #F08080;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <h3>Orders</h3>
+    <a href="product.html" class="nav-link">Products</a>
+  </div>
+
+  <div class="container">
+    <h2>My Orders</h2>
+    <div id="order-history"></div>
+  </div>
+
+<script>
+  async function fetchOrders() {
+    try {
+      const res = await fetch("/api/orders");
+      const orders = await res.json();
+      renderOrders(orders);
+    } catch (err) {
+      console.error("Error fetching orders:", err);
+    }
+  }
+
+  function renderOrders(orders) {
+    const container = document.getElementById("order-history");
+    container.innerHTML = "";
+
+    if (orders.length === 0) {
+      container.innerHTML = "<p>No orders found.</p>";
+      return;
+    }
+
+    orders.forEach((order, index) => {
+      const div = document.createElement("div");
+      div.className = "order-card";
+
+      let itemsHTML = "";
+      order.items.forEach(item => {
+        itemsHTML += `
+          <div class="order-items">
+            - ${item.name} x${item.quantity} — ₹${item.price * item.quantity}
+          </div>`;
+      });
+
+      div.innerHTML = `
+        <div class="order-header">
+          <span>Order #${order.orderId || order._id.slice(-6)}</span>
+          <span>Status: ${order.status}</span>
+        </div>
+        <div>Customer: ${order.customerName}</div>
+        ${itemsHTML}
+        <div style="margin-top: 10px; font-weight: bold;">Total: ₹${order.total}</div>
+        
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  fetchOrders();
+</script>
+
+
+</body>
+</html>

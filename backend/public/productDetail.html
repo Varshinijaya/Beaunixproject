@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Page</title>
+  <link rel="stylesheet" href="style.css">
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+
+* {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      padding: 40px;
+      margin: 0;
+    }
+  .cart {
+      display: flex;
+      justify-content: center;
+      
+      
+      gap: 20px;
+    }
+
+    .icon-box {
+      width: 50px;
+      height: 50px;
+      background-color: white;
+      border: 1px solid #ddd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .icon-box:hover {
+      background-color: #F08080;
+      transform: scale(1.05);
+      color:white;
+    }
+
+    .icon-box i {
+      font-size: 20px;}
+    .product-card {
+      display: flex;
+      max-width: 1000px; /* Increased container size */
+      background-color: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-top: 80px;
+      margin-left: 240px;
+
+      
+    }
+
+    .product-image {
+      flex: 1.2; /* Slightly larger image */
+      background-color: #f0f0f0;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-details {
+      flex: 2;
+      padding: 30px 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-name {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .price {
+      font-size: 40px;
+      font-weight: 600;
+      color: #F08080;
+      margin-bottom: 10px;
+    }
+
+    .stock {
+      color: #2d7c2d;
+      font-weight: 500;
+      margin-bottom: 15px;
+      font-size: 2em;
+    }
+
+    .description {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+   .qty-select {
+  width: 80px;
+  padding: 10px 14px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+    .add-btn {
+      padding: 12px 22px;
+      background-color: #F08080;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .add-btn:hover {
+      background-color:#c25555;
+    }
+
+    @media (max-width: 768px) {
+      .product-card {
+        flex-direction: column;
+      }
+
+      .product-image, .product-details {
+        width: 100%;
+      }
+
+      .product-details {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+ <!-- navbar -->
+     <section id="header" class="header">
+      <a href="#" class="logo"><i class="fas fa-female"></i> BEAUNIX</a>
+      <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="product.html">Products</a>
+        <a href="#gallery">Brands</a>
+        <a href="#message">Profile</a>
+      </nav>
+      <div class="cart">
+     <div class="icon-box">
+    <i class="fas fa-heart"></i>
+  </div>
+  
+  <div class="icon-box cart-icon">
+    
+    <i class="fas fa-shopping-bag"></i>
+  </div>
+</div>
+      
+    <a href="login.html" class="btn1">LogIn</a> 
+    </section>
+
+
+
+  <div class="product-card">
+    <!-- Left Side Image -->
+    <div class="product-image">
+      <img src="img/lip5.avif" alt="Product Image" />
+    </div>
+
+    <!-- Right Side Details -->
+    <div class="product-details">
+      <div>
+        <div class="product-name">Luxury Lipstick</div>
+        <div class="price">Rs. 10.00</div>
+        <div class="stock">In Stock</div>
+        <div class="description">
+          Description: A rich, creamy lipstick that glides on smoothly and offers intense hydration and color payoff. Perfect for everyday wear or a glamorous night out.
+        </div>
+      </div>
+
+      <div class="actions">
+        <p style="font-size: 2em;">Quantity:</p>
+  <input type="number" class="qty-select" min="1" max="10" value="1">
+  <button class="add-btn">Add to Cart</button>
+</div>
+    </div>
+  </div>
+<script>
+  async function loadProductDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
+
+    if (!productId) {
+      alert("No product ID found.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/products/${productId}`);
+      const product = await response.json();
+
+      document.querySelector('.product-image img').src = product.image;
+      document.querySelector('.product-name').textContent = product.name;
+      document.querySelector('.price').textContent = `Rs. ${product.price}`;
+      document.querySelector('.stock').textContent = product.stock_quantity > 0 ? "In Stock" : "Out of Stock";
+      document.querySelector('.description').textContent = `Description: ${product.description}`;
+    } catch (err) {
+      console.error("Failed to load product:", err);
+      alert("Could not load product details.");
+    }
+  }
+
+  window.onload = loadProductDetails;
+
+  async function loadProductDetails() {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
+
+    if (!productId) {
+      alert("No product ID found.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/products/${productId}`);
+      const product = await response.json();
+
+      // Set DOM
+      document.querySelector('.product-image img').src = product.image;
+      document.querySelector('.product-name').textContent = product.name;
+      document.querySelector('.price').textContent = `Rs. ${product.price}`;
+      document.querySelector('.stock').textContent = product.stock_quantity > 0 ? "In Stock" : "Out of Stock";
+      document.querySelector('.description').textContent = `Description: ${product.description}`;
+
+      // Add to cart logic
+      document.querySelector('.add-btn').addEventListener('click', () => {
+        const qty = parseInt(document.querySelector('.qty-select').value);
+        if (qty < 1) return alert("Quantity must be at least 1");
+
+        const cartItem = {
+          id: product._id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          quantity: qty
+        };
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        const existing = cart.find(item => item.id === product._id);
+        if (existing) {
+          existing.quantity += qty;
+        } else {
+          cart.push(cartItem);
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+         alert("Added to cart!");
+      });
+
+      // Click on cart icon
+      document.querySelector('.cart-icon').addEventListener('click', () => {
+        window.location.href = "order.html";
+      });
+
+    } catch (err) {
+      console.error("Failed to load product:", err);
+      alert("Could not load product details.");
+    }
+  }
+
+  window.onload = loadProductDetails;
+</script>
+
+
+
+</body>
+</html>

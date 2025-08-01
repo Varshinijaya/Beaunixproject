@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Read Reviews</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f9f9f9;
+    }
+    nav {
+      background: #F08080;
+      padding: 15px;
+      color: white;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bolder;
+    }
+    .search-bar {
+      padding: 20px;
+      text-align: center;
+    }
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    .reviews-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 10px;
+     
+    }
+    .review-box {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    .review-box h3 {
+      margin: 0;
+      color: #333;
+    }
+    .review-box .product {
+      font-weight: bold;
+      color: #ff4d6d;
+    }
+    .review-box .stars {
+      color: gold;
+      font-size: 20px;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>REVIEWS
+    <a href="index.html" style="text-decoration: none; margin-left: 20px;color: white;">HOME</a>
+  </nav>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search by product name...">
+  </div>
+
+  <div class="reviews-container" id="reviewList"></div>
+
+  <script>
+    const reviewList = document.getElementById("reviewList");
+    const searchInput = document.getElementById("searchInput");
+
+    function displayReviews(filter = "") {
+      const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+      reviewList.innerHTML = "";
+
+      const filtered = reviews.filter(r => r.product.toLowerCase().includes(filter.toLowerCase()));
+
+      if (filtered.length === 0) {
+        reviewList.innerHTML = "<p style='text-align:center;'>No reviews found.</p>";
+        return;
+      }
+
+      filtered.forEach(review => {
+        const stars = "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+        const div = document.createElement("div");
+        div.className = "review-box";
+        div.innerHTML = `
+          <h3>${review.name}</h3>
+          <div class="product">${review.product}</div>
+          <div class="stars">${stars}</div>
+          <p>${review.text}</p>
+        `;
+        reviewList.appendChild(div);
+      });
+    }
+
+    searchInput.addEventListener("input", e => {
+      displayReviews(e.target.value);
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      displayReviews();
+    });
+  </script>
+
+</body>
+</html>
