@@ -7,20 +7,20 @@
 🔗https://drive.google.com/drive/folders/1v9qw1pTvxoV0oygOLo7rhrbKksO2QdZS?usp=drive_link
 
 
-**PROJECT TITLE **
+# PROJECT TITLE
     BEAUNIX - Full Stack E-Commerce App
     
 *DESCRIPTION*
     BEAUNIX is a full-stack e-commerce platform featuring a Customer and Admin Portal with role-based authentication, product/order/customer management, custom branding, and a premium user interface.
 
-*FEATURES*
+# FEATURES
     - JWT Authentication (Login/Register)
     - Role-Based Access Control (Admin vs Customer)
     - Product Filtering, Sorting, and Pagination
     - Admin CRUD for Products, Orders, Customers
     - Order Tracking & Impersonation Feature
     - Custom Branding System
-*TECH STACK*
+# TECH STACK
     MEN Stack: MongoDB – Express – Node.js (with Vanilla JS frontend)
     Frontend: HTML, CSS, JavaScript(Vanilla)  
     Backend: Node.js, Express.js, MongoDB, Mongoose  
@@ -28,15 +28,17 @@
     Deployment: github
 
     
-*FOLDER STRUCTURE*
+# FOLDER STRUCTURE
 BEAUNIXPROJECT/
 │
-├── controllers/                 
+├── controllers/ 
+|
 │   ├── authController.js
 │   ├── customerController.js
 │   └── productController.js
 │
-├── models/                      
+├── models/
+|
 │   ├── Order.js
 │   ├── Product.js
 │   └── User.js
